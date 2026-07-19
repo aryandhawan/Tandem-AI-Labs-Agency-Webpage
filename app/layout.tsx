@@ -25,12 +25,16 @@ export const metadata: Metadata = {
   title: 'Tandem AI Labs',
   description: 'Tandem AI Labs — Custom RAG systems, agentic AI, and workflow automation for businesses.',
   metadataBase: new URL('https://tandem-ai.tech'),
+  icons: {
+    icon: '/favicon.svg',
+  },
   openGraph: {
     title: 'Tandem AI Labs',
     description: 'Custom RAG systems, agentic AI, and workflow automation — built end-to-end.',
     url: 'https://tandem-ai.tech',
     siteName: 'Tandem AI Labs',
     type: 'website',
+    images: [],
   },
   twitter: {
     card: 'summary_large_image',
