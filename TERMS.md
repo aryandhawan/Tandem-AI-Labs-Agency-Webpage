@@ -32,6 +32,12 @@ Tandem AI Labs provides services on an "as-is" basis. While we take reasonable c
 
 Clients are responsible for providing accurate information, timely feedback, and necessary access (such as API keys, credentials, or system access) required to complete the engagement. Delays caused by incomplete or delayed client input may affect project timelines.
 
+## Acceptable Use
+
+Clients agree to use any system, tool, or service delivered by Tandem AI Labs only for lawful purposes and in accordance with applicable laws and regulations. Tandem AI Labs is not responsible for how a delivered system is used after handover, and expressly disclaims liability for any misuse, unlawful use, or unauthorized use of the delivered system by the client, its employees, or any third party operating on the client's behalf.
+
+Any liability, claim, fine, or legal consequence arising from the client's misuse of a delivered system — including but not limited to violations of data protection laws, consumer protection laws, or any other applicable regulation — rests solely with the client. Tandem AI Labs' responsibility is limited to delivering a system that functions as specified in the agreed project scope at the time of handover.
+
 ## Termination
 
 Either party may terminate an ongoing engagement with written notice, subject to payment for work completed up to the termination date, as outlined in the specific project agreement.
