@@ -22,8 +22,8 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Tandem AI Labs',
-  description: 'Tandem AI Labs — Custom RAG systems, agentic AI, and workflow automation for businesses.',
+  title: 'Tandem AI Labs — Custom AI Systems for Business',
+  description: 'Custom RAG systems, agentic AI, and workflow automation — built end-to-end for businesses. Free business audit, fixed-price delivery, real production systems.',
   metadataBase: new URL('https://tandem-ai.tech'),
   icons: {
     icon: '/favicon.svg',
