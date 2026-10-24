@@ -15,31 +15,70 @@ export function AnimatedSphere() {
 
     const chars = "░▒▓█▀▄▌▐│─┤├┴┬╭╮╰╯";
     let time = 0;
+    let width = 0;
+    let height = 0;
+    let isDark = document.documentElement.classList.contains("dark");
+    let isVisible = true;
+    let lastTs = 0;
+
+    // Precomputed fill styles (alpha rounded to 0.01) so no strings are built per point
+    let fillStyles: string[] = [];
+    const buildFillStyles = () => {
+      const rgb = isDark ? "255, 255, 255" : "0, 0, 0";
+      fillStyles = Array.from({ length: 101 }, (_, i) => `rgba(${rgb}, ${i / 100})`);
+    };
+    buildFillStyles();
 
     const resize = () => {
       const dpr = window.devicePixelRatio || 1;
       const rect = canvas.getBoundingClientRect();
-      canvas.width = rect.width * dpr;
-      canvas.height = rect.height * dpr;
-      ctx.scale(dpr, dpr);
+      width = rect.width;
+      height = rect.height;
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
 
     resize();
     window.addEventListener("resize", resize);
 
-    const render = () => {
-      const rect = canvas.getBoundingClientRect();
-      ctx.clearRect(0, 0, rect.width, rect.height);
+    // Cache the theme instead of reading the DOM for every point on every frame
+    const themeObserver = new MutationObserver(() => {
+      isDark = document.documentElement.classList.contains("dark");
+      buildFillStyles();
+    });
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
 
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-      const radius = Math.min(rect.width, rect.height) * 0.525;
+    // Pause drawing while the sphere is off screen
+    const visibilityObserver = new IntersectionObserver(([entry]) => {
+      isVisible = entry.isIntersecting;
+    });
+    visibilityObserver.observe(canvas);
+
+    const render = (ts: number) => {
+      frameRef.current = requestAnimationFrame(render);
+      if (!isVisible) {
+        lastTs = 0;
+        return;
+      }
+
+      // Frame-rate independent: same speed as before at 60fps
+      const dt = lastTs ? Math.min((ts - lastTs) / 16.667, 3) : 1;
+      lastTs = ts;
+
+      ctx.clearRect(0, 0, width, height);
+
+      const centerX = width / 2;
+      const centerY = height / 2;
+      const radius = Math.min(width, height) * 0.525;
 
       ctx.font = "12px monospace";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
 
-      const step = 12;
       const points: { x: number; y: number; z: number; char: string }[] = [];
 
       // Generate sphere points
@@ -77,20 +116,19 @@ export function AnimatedSphere() {
       // Draw points
       points.forEach((point) => {
         const alpha = 0.2 + (point.z + 1) * 0.4;
-        const isDark = document.documentElement.classList.contains("dark");
-        const rgb = isDark ? "255, 255, 255" : "0, 0, 0";
-        ctx.fillStyle = `rgba(${rgb}, ${alpha})`;
+        ctx.fillStyle = fillStyles[Math.round(alpha * 100)];
         ctx.fillText(point.char, point.x, point.y);
       });
 
-      time += 0.02;
-      frameRef.current = requestAnimationFrame(render);
+      time += 0.02 * dt;
     };
 
-    render();
+    frameRef.current = requestAnimationFrame(render);
 
     return () => {
       window.removeEventListener("resize", resize);
+      themeObserver.disconnect();
+      visibilityObserver.disconnect();
       cancelAnimationFrame(frameRef.current);
     };
   }, []);

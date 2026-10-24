@@ -52,7 +52,7 @@ const metrics = [
     label: "Downtime since deployment",
   },
   {
-    value: 2,
+    value: 3,
     suffix: "",
     prefix: "",
     label: "Deterministic workflows in production",

@@ -1,20 +1,34 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { Star, FileText } from "lucide-react";
+import { Star, FileText, BarChart3, ArrowUpRight } from "lucide-react";
 
 const projects = [
   {
-    icon: Star,
-    title: "Kismat Machinery — AI Review Automation",
+    icon: BarChart3,
+    title: "Digital Marketing Agency — AI Experiment Reporting",
     description:
-      "Live AI-powered Google review response system for a Pune-based industrial manufacturer. Automatically analyzes reviews, drafts contextual replies, with human approval before every publish. Includes a live dashboard for tracking sentiment, customizable reply tone and templates, and a bundled review-generation flow to help grow ratings organically. Currently home-server deployed — fully portable to cloud infrastructure. Running daily, zero downtime.",
+      "Live AI reporting system for a digital marketing agency. Pulls A/B test results directly from GrowthBook, writes the verdict, and builds a client-ready Google Slides deck from a single prompt, saved straight to Drive. Includes a chat interface for follow-up questions about any experiment. Containerized on the cloud with fallbacks so a failing step never takes it down. Used by the client today, with a second experiment platform in progress.",
+    link: {
+      label: "Live system (login required)",
+      href: "https://report-frontend-285738625609.asia-south1.run.app/",
+    },
   },
   {
     icon: FileText,
     title: "Lucid — Autonomous Research Digest",
     description:
       "Fully autonomous agentic RAG pipeline tracking daily arXiv research, filtering for relevance, and delivering summaries via email. Serverless architecture, running daily with real subscribers.",
+    link: {
+      label: "View on GitHub",
+      href: "https://github.com/aryandhawan/Lucid",
+    },
+  },
+  {
+    icon: Star,
+    title: "Kismat Machinery — AI Review Automation",
+    description:
+      "Live AI-powered Google review response system for a Pune-based industrial manufacturer. Automatically analyzes reviews, drafts contextual replies, with human approval before every publish. Includes a live dashboard for tracking sentiment, customizable reply tone and templates, and a bundled review-generation flow to help grow ratings organically. Currently home-server deployed — fully portable to cloud infrastructure. Running daily, zero downtime.",
   },
 ];
 
@@ -94,6 +108,17 @@ export function SecuritySection() {
                       {project.title}
                     </h3>
                     <p className="text-muted-foreground leading-relaxed">{project.description}</p>
+                    {"link" in project && project.link && (
+                      <a
+                        href={project.link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 mt-4 text-sm font-mono text-muted-foreground hover:text-foreground transition-colors"
+                      >
+                        {project.link.label}
+                        <ArrowUpRight className="w-3 h-3" />
+                      </a>
+                    )}
                   </div>
                 </div>
               </div>
